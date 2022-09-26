@@ -1,11 +1,11 @@
-import { prisma } from '@prisma/client';
+import { prisma } from '../../database'
 import supertest from 'supertest';
-import app from '../app';
-import postRecomendations from './factories/postRecomendations';
+import app from '../../app';
+import postRecomendations from '../factories/postRecomendations';
 
 
 beforeEach(async () => {
-  await prisma.$executeRaw`TRUNCATE TABLE recommendations`;
+  await prisma.$queryRaw`TRUNCATE TABLE recommendations`;
 });
 
 describe('Test recomendations Routes',  () => {
@@ -28,7 +28,7 @@ describe('Test recomendations Routes',  () => {
     await supertest(app).post('/recommendations').send(user);
     const result = await supertest(app).post('/recommendations').send(user);
 
-    expect(result.status).toBe(201);
+    expect(result.status).toBe(409);
   
   });
 

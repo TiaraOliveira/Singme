@@ -35,6 +35,7 @@ async function downvote(id: number) {
 
 async function getByIdOrFail(id: number) {
   const recommendation = await recommendationRepository.find(id);
+  
   if (!recommendation) throw notFoundError();
 
   return recommendation;
